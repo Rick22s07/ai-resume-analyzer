@@ -54,6 +54,47 @@ JSON 格式必须是这样：
 
     return json.loads(content)
 
+sample_resume = """
+张三
+求职方向：Python 后端开发
+
+技能：
+- Python
+- FastAPI
+- MySQL
+- Git
+
+项目经历：
+- 开发过一个个人博客 API，支持文章增删改查和用户登录
+- 使用 FastAPI 和 MySQL 完成数据接口
+- 将项目部署到云服务器，并使用 Git 管理代码
+"""
+
+sample_job = """
+岗位：Python 后端开发工程师
+
+岗位职责：
+- 负责后端接口设计和开发
+- 参与数据库设计和性能优化
+- 与前端工程师协作完成产品功能
+
+任职要求：
+- 熟悉 Python
+- 熟悉至少一种 Web 框架，如 FastAPI 或 Django
+- 了解 MySQL 和 Redis
+- 熟悉 Git 和 Linux
+- 有云服务器部署经验优先
+"""
+
+if "resume_text" not in st.session_state:
+    st.session_state.resume_text = ""
+
+if "job_text" not in st.session_state:
+    st.session_state.job_text = ""
+
+if st.button("加载示例"):
+    st.session_state.resume_text = sample_resume
+    st.session_state.job_text = sample_job
 
 with st.form("resume_form"):
     left, right = st.columns(2)
@@ -62,14 +103,16 @@ with st.form("resume_form"):
         resume_text = st.text_area(
             "你的简历",
             height=300,
-            placeholder="把简历内容粘贴到这里"
+            placeholder="把简历内容粘贴到这里",
+            key="resume_text"
         )
 
     with right:
         job_text = st.text_area(
             "岗位描述",
             height=300,
-            placeholder="把岗位描述粘贴到这里"
+            placeholder="把岗位描述粘贴到这里",
+            key="job_text"
         )
 
     submitted = st.form_submit_button("开始分析", use_container_width=True)
